@@ -7,11 +7,11 @@ class TemplateStatus(str, Enum):
     DRAFT = "draft"
     PUBLISHED = "published"
 
-class ResourceBase(BaseModel):
-    TEXT = "text"
-    IMAGE = "image"
-    VIDEO = "video"
-    AUDIO = "audio"
+class ResourceType(str, Enum):
+    TEXT = 'text'
+    IMAGE = 'image'
+    VIDEO = 'video'
+    AUDIO = 'audio'
 
 class ResourceBase(BaseModel):
     name: str
@@ -28,7 +28,7 @@ class Resource(ResourceBase):
     template_id: str
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 class TemplateBase(BaseModel):
     name: str
@@ -47,4 +47,4 @@ class Template(TemplateBase):
     version: int
 
     class Config:
-        orm_mode = True
+        from_attributes = True
