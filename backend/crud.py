@@ -1,7 +1,8 @@
 from sqlalchemy.orm import Session
-import models, schemas
+import models, schemas, json
 import uuid
 from datetime import datetime
+import json
 
 def get_template(db: Session, template_id: str):
     return db.query(models.Template).filter(models.Template.id == template_id).first()
@@ -10,13 +11,14 @@ def get_templates(db: Session, skip: int = 0, limit: int = 100):
     return db.query(models.Template).offset(skip).limit(limit).all()
 
 def create_template(db: Session, template: schemas.TemplateCreate):
-    db_template = models.Template(id=str(uuid.uuid4()), **template.dict())
+    template_dict = template.dict()
+    db_template = models.Template(id=str(uuid.uuid4()), **template_dict)
     db.add(db_template)
     db.commit()
     db.refresh(db_template)
     return db_template
 
-def update_template(db: Session, template_id: str, template: schemas.TemplateCreate):
+def update_template(db: Session, template_id: str, template: schemas.TemplateUpdate):
     db_template = db.query(models.Template).filter(models.Template.id == template_id).first()
     if db_template:
         update_data = template.dict(exclude_unset=True)
@@ -43,7 +45,7 @@ def create_resource(db: Session, resource: schemas.ResourceCreate, template_id: 
     db.refresh(db_resource)
     return db_resource
 
-def update_resource(db: Session, resource_id: str, resource: schemas.ResourceCreate):
+def update_resource(db: Session, resource_id: str, resource: schemas.ResourceUpdate):
     db_resource = db.query(models.Resource).filter(models.Resource.id == resource_id).first()
     if db_resource:
         update_data = resource.dict(exclude_unset=True)
@@ -60,3 +62,12 @@ def delete_resource(db: Session, resource_id: str):
         db.commit()
         return True
     return False
+
+def publish_template(db: Session, template_id: str):
+    db_template = get_template(db, template_id)
+    if db_template:
+        db_template.status = models.TemplateStatus.PUBLISHED
+        db_template.published_url = f"/templates/{template_id}"
+        db.commit()
+        db.refresh(db_template)
+    return db_template
