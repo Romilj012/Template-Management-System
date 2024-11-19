@@ -1,18 +1,33 @@
-import React, { useState } from 'react';
-import { Box } from '@mui/material';
+import React, { useState, useEffect } from 'react';
+import { Box, CircularProgress, Snackbar } from '@mui/material';
 import Header from './Header';
 import Sidebar from './Sidebar';
 import TemplateList from './TemplateList';
 import TemplateDetails from './TemplateDetails';
 import ChatbotIcon from './ChatbotIcon';
+import { getTemplates } from '../services/api';
 
 function Dashboard({ user, onLogout }) {
-  const [templates, setTemplates] = useState([
-    { id: 1, name: 'Template 1', description: 'Description for Template 1', resources: ['Resource 1', 'Resource 2'] },
-    { id: 2, name: 'Template 2', description: 'Description for Template 2', resources: ['Resource 3', 'Resource 4'] },
-    { id: 3, name: 'Template 3', description: 'Description for Template 3', resources: ['Resource 5', 'Resource 6'] },
-  ]);
+  const [templates, setTemplates] = useState([]);
   const [selectedTemplateId, setSelectedTemplateId] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    fetchTemplates();
+  }, []);
+
+  const fetchTemplates = async () => {
+    try {
+      setLoading(true);
+      const response = await getTemplates();
+      setTemplates(response.data);
+    } catch (err) {
+      setError('Failed to fetch templates');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleDashboardClick = () => {
     setSelectedTemplateId(null);
@@ -22,29 +37,15 @@ function Dashboard({ user, onLogout }) {
     setSelectedTemplateId(templateId);
   };
 
-  const handleUpdateResources = (templateId, updatedResources) => {
-    setTemplates(prevTemplates =>
-      prevTemplates.map(template =>
-        template.id === templateId ? { ...template, resources: updatedResources } : template
-      )
-    );
-  };
-
-  const handleAddTemplate = (newTemplate) => {
-    const newId = Math.max(...templates.map(t => t.id), 0) + 1;
-    const templateWithId = { ...newTemplate, id: newId };
-    setTemplates(prevTemplates => [...prevTemplates, templateWithId]);
-  };
-
-  const handleDeleteTemplate = (templateId) => {
-    setTemplates(prevTemplates => prevTemplates.filter(t => t.id !== templateId));
-    if (selectedTemplateId === templateId) {
-      setSelectedTemplateId(null);
-    }
+  const handleUpdateResources = async (templateId, updatedResources) => {
+    console.log(`Update resources for template ${templateId}`, updatedResources);
+    fetchTemplates(); 
   };
 
   const selectedTemplate = templates.find(template => template.id === selectedTemplateId);
 
+  if (loading) return <CircularProgress />;
+  
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
       <Header user={user} />
@@ -53,26 +54,33 @@ function Dashboard({ user, onLogout }) {
         <Box sx={{ flexGrow: 1, p: 3, overflow: 'auto' }}>
           {selectedTemplate ? (
             <TemplateDetails
-              template={selectedTemplate}
-              onEdit={() => console.log('Edit template')}
-              onDelete={() => handleDeleteTemplate(selectedTemplateId)}
-              onPublish={() => console.log('Publish template')}
+              templateId={selectedTemplate.id}
+              onDelete={(id) => console.log('Delete template', id)} 
               onUpdateResources={handleUpdateResources}
-              onBackToDashboard={handleDashboardClick}
             />
           ) : (
             <TemplateList 
               templates={templates}
               onSelectTemplate={handleSelectTemplate}
-              onAddTemplate={handleAddTemplate}
-              onDeleteTemplate={handleDeleteTemplate}
+              onAddTemplate={(newTemplate) => console.log('Add new template', newTemplate)} 
+              onDeleteTemplate={(id) => console.log('Delete template', id)}
             />
           )}
         </Box>
         <ChatbotIcon />
       </Box>
+      {error && (
+        <Snackbar 
+          open={!!error} 
+          autoHideDuration={6000} 
+          message={error} 
+          onClose={() => setError(null)} 
+        />
+      )}
     </Box>
   );
 }
 
 export default Dashboard;
+
+
