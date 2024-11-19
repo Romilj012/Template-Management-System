@@ -10,12 +10,16 @@ const CompanyName = styled(Typography)(({ theme }) => ({
   },
 }));
 
-function Header({ user }) {
+function Header({ user, onLogout }) {
   return (
     <AppBar position="static">
       <Toolbar>
         <Box sx={{ display: 'flex', alignItems: 'center', flexGrow: 1 }}>
-          <img src={`${process.env.PUBLIC_URL}neuralix-logo.jpg`} alt="Neuralix Logo" style={{ height: '40px', marginRight: '10px' }} />
+          <img 
+            src={`${process.env.PUBLIC_URL}/neuralix-logo.jpg`} 
+            alt="Neuralix Logo" 
+            style={{ height: '40px', marginRight: '10px' }} 
+          />
           <Box>
             <CompanyName variant="h6" component="div">
               neural<span className="highlight">ix.ai</span>
@@ -30,7 +34,7 @@ function Header({ user }) {
             <Typography variant="body1" sx={{ mr: 2 }}>
               {user.name}
             </Typography>
-            <IconButton color="inherit">
+            <IconButton color="inherit" onClick={onLogout}>
               <AccountCircleIcon />
             </IconButton>
           </Box>
@@ -41,4 +45,3 @@ function Header({ user }) {
 }
 
 export default Header;
-
