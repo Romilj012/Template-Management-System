@@ -11,6 +11,7 @@ function TagInput({ tags, setTags, templateId }) {
     setInput(e.target.value);
   };
 
+
   const handleAddTag = () => {
     if (input.trim()) {
       const newTags = [...tags, input.trim()];

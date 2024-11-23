@@ -29,6 +29,19 @@ function App() {
     setUser(null);
   };
 
+  if (!user) {
+    return (
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        {isLoginView ? (
+          <Login onLogin={handleLogin} onSwitchToSignup={() => setIsLoginView(false)} />
+        ) : (
+          <Signup onSignup={handleSignup} onSwitchToLogin={() => setIsLoginView(true)} />
+        )}
+      </ThemeProvider>
+    );
+  }
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />

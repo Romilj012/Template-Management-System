@@ -1,33 +1,38 @@
-import React from 'react';
-import { Box, TextField, Button, Typography } from '@mui/material';
+import React, { useState } from "react";
+import { TextField, Button, CircularProgress, Typography } from "@mui/material";
+import { getSuggestions } from "../services/api";
 
-function LLMAssistant() {
-  return (
-    <Box>
-      <Typography variant="h6" sx={{ mb: 2 }}>LLM Assistant</Typography>
-      <TextField
-        fullWidth
-        label="Ask for assistance"
-        variant="outlined"
-        sx={{ mb: 2 }}
-      />
-      <Button variant="contained" fullWidth sx={{ mb: 2 }}>
-        Get Suggestion
-      </Button>
-      <Typography variant="body2">AI suggestions</Typography>
-      <Box sx={{ mt: 4 }}>
-        <Button variant="contained" color="secondary" fullWidth sx={{ mb: 2 }}>
-          Publish Template
-        </Button>
-        <Button variant="outlined" fullWidth sx={{ mb: 2 }}>
-          Export Template
-        </Button>
-        <Button variant="outlined" color="error" fullWidth>
-          Delete Template
-        </Button>
-      </Box>
-    </Box>
-  );
+function LLMAssistant({ context, onApplySuggestion }) {
+    const [loading, setLoading] = useState(false);
+    const [suggestions, setSuggestions] = useState("");
+
+    const handleGetSuggestions = async () => {
+        setLoading(true);
+        try {
+            const response = await getSuggestions(context);
+            setSuggestions(response.suggestions);
+        } catch (error) {
+            console.error("Error fetching suggestions:", error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    return (
+        <div>
+            <Button variant="contained" onClick={handleGetSuggestions}>
+                Get Suggestions
+            </Button>
+            {loading && <CircularProgress />}
+            {suggestions && (
+                <div>
+                    <Typography variant="h6">Suggestions:</Typography>
+                    <Typography>{suggestions}</Typography>
+                    <Button onClick={() => onApplySuggestion(suggestions)}>Apply</Button>
+                </div>
+            )}
+        </div>
+    );
 }
 
 export default LLMAssistant;

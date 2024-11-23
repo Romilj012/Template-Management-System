@@ -17,7 +17,7 @@ function TemplateManagement() {
         {templates.map((template, index) => (
           <ListItem key={index} sx={{ border: 1, borderColor: 'grey.300', mb: 1 }}>
             <ListItemText
-              primary={template.name}
+              primary={template.displayName}
               secondary={
                 <React.Fragment>
                   <Typography variant="body2" component="span">
