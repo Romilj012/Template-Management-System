@@ -1,4 +1,4 @@
-// //working 11/19 10:55
+// 11/19 10:55
 // import axios from 'axios';
 
 // const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:8000';
@@ -115,7 +115,7 @@
 //   baseURL: PRODUCTION_API_URL,
 //   headers: {
 //     'Content-Type': 'application/json',
-//     'X-Api-Key': 'nixdlt_f4d47a72fdbc6784341de64885b2bdc20f6237e05ff708e1f2671d143a108600',
+//     'X-Api-Key': '',
 //   },
 // });
 
@@ -158,7 +158,7 @@
 //     method: 'POST',
 //     body: formData,
 //     headers: {
-//       'x-nix-wid': localStorage.getItem('workspaceId') // Assuming you store the workspace ID in localStorage
+//       'x-nix-wid': localStorage.getItem('workspaceId') 
 //     }
 //   });
 
@@ -170,7 +170,7 @@
 // };
 
 
-//working 11/22 5:07
+// 11/22 5:07
 import axios from 'axios';
 
 const LOCAL_API_URL = 'http://localhost:8000';
@@ -212,7 +212,7 @@ export const publishTemplate = async (templateData) => {
     method: 'POST',
     body: formData,
     headers: {
-      'x-nix-wid': localStorage.getItem('workspaceId') // Assuming you store the workspace ID in localStorage
+      'x-nix-wid': localStorage.getItem('workspaceId')
     }
   });
 
