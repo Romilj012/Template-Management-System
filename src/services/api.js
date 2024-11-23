@@ -187,7 +187,7 @@ const productionApi = axios.create({
   baseURL: PRODUCTION_API_URL,
   headers: {
     'Content-Type': 'application/json',
-    'X-Api-Key': 'nixdlt_f4d47a72fdbc6784341de64885b2bdc20f6237e05ff708e1f2671d143a108600',
+    'X-Api-Key': '',
   },
 });
 
