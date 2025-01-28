@@ -1,6 +1,6 @@
 # AI Template Editor
 
-![Template Management System Logo](path/to/TemplateEditor.webp)
+![Template Management System Logo](TemplateEditor.webp)
 
 ## 🚀 Overview
 
