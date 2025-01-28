@@ -16,8 +16,11 @@
 ## ✨ Key Features
 
 ✅ **Version Control** - Track and manage template changes efficiently.
+
 ✅ **AI-Powered Suggestions** - Leverage OpenAI API for smart auto-completions and recommendations.
+
 ✅ **Dynamic JSON Editor** - User-friendly JSON editor with schema validation and auto-formatting.
+
 ✅ **Secure & Scalable** - JWT-based authentication, role-based access control, and structured SQL database.
 
 ## 🛠️ How It Works
