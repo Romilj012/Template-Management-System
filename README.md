@@ -1,6 +1,5 @@
 # AI Template Editor
 
-![Template Management System Logo](path/to/logo.png)
 
 ## 🚀 Overview
 
