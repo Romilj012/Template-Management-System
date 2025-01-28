@@ -53,3 +53,19 @@ uvicorn main:app --reload
 cd ../frontend
 npm start
 ```
+## 📖 Template Editor Guide
+
+### Template Creation
+Create new templates by defining a collection of resources. Each resource supports custom JSON configurations.
+
+### Resource Management
+Add resources using the 'Add New Resource' form. Specify resource name, type, and configure JSON settings using the built-in editor.
+
+### Template Publishing
+Publish templates to the DLT platform using the 'Publish Workspace' button. All configurations are validated before publishing.
+
+### Version Control
+Track changes using the version control feature. Compare different versions using the diff view to see modifications.
+
+### Import/Export
+Share templates by exporting them as .zip files. Import existing templates to reuse configurations.
