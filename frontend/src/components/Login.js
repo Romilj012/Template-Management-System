@@ -49,9 +49,9 @@ function Login() {
 
   return (
     <StyledPaper elevation={3}>
-      <Logo src={`${process.env.PUBLIC_URL}/neuralix-logo.jpg`} alt="Neuralix Logo" />
+      <Logo src={`${process.env.PUBLIC_URL}/TemplateEditorIcon.webp`} alt="Template Editor Icon" />
       <CompanyName variant="h5" component="h1" gutterBottom sx={{ fontWeight: 'bold' }}>
-        neural<span className="highlight">ix.ai</span>
+        AI Template<span className="highlight"> Editor</span>
       </CompanyName>
       <Typography variant="h6" component="h2" sx={{ mt: 2, mb: 2 }}>
         Log in
