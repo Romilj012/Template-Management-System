@@ -19,13 +19,13 @@ function Header({ onLogout }) {
       <Toolbar>
         <Box sx={{ display: 'flex', alignItems: 'center', flexGrow: 1 }}>
           <img 
-            src={`${process.env.PUBLIC_URL}/neuralix-logo.jpg`} 
-            alt="Neuralix Logo" 
+            src={`${process.env.PUBLIC_URL}/TemplateEditorIcon.webp`} 
+            alt="Template Editor Icon" 
             style={{ height: '40px', marginRight: '10px' }} 
           />
           <Box>
             <CompanyName variant="h6" component="div">
-              neural<span className="highlight">ix.ai</span>
+              AI Template<span className="highlight"> Editor</span>
             </CompanyName>
             <Typography variant="caption" component="div">
               Template Editor
